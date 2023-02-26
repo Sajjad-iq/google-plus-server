@@ -32,6 +32,7 @@ app.use(express.json());
 app.use("/api/SignUp", SignUpRoutes)
 app.use("/api/SignIn", SignInRoutes)
 app.use("/api/Profile", ProfileRoutes)
+app.use("/api/Posts", PostsRoutes)
 
 
 app.listen(process.env.PORT, () => console.log("server is running"))

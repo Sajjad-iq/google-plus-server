@@ -5,6 +5,8 @@ exports.SignInHandler = async (req, res) => {
 
     try {
         const user = await Account.findOne({ Email: req.body.Email });
+        console.log(user)
+        console.log(req.body)
 
         if (user) {
             if (user.Password == req.body.Password) {

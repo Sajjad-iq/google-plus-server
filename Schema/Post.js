@@ -2,28 +2,67 @@ const mongoose = require("mongoose");
 
 const CommentRePlay = new mongoose.Schema({
     CommentRePlayerBody: String,
-    CommentRePlayOwner: String,
-    CommentsRePlayLikes: Number,
-})
+    CommentRePlayOwnerName: String,
+    CommentRePlayOwnerId: String,
+    CommentsRePlayLikes: {
+        default: [],
+        type: Array
+    }
+}
+    , { timestamps: true }
+
+)
 
 const Comments = new mongoose.Schema({
     CommentBody: String,
-    CommentOwner: String,
-    CommentsLikes: Number,
+    CommentOwnerName: String,
+    CommentOwnerId: String,
+    CommentOwnerImage: {
+        default: "",
+        type: String
+    },
+    CommentsLikes: {
+        default: [],
+        type: Array
+    },
     CommentsRePlays: CommentRePlay
-})
+},
+    { timestamps: true }
+
+)
 
 const AddPostSchema = new mongoose.Schema({
-    PostBody: String,
-    PostOwner: String,
-    Likes: {
-        type: Number,
-        default: 0
+    PostBody: {
+        type: String,
+        default: ""
     },
-    CommentsCount: {
-        type: Number,
-        default: 0
+    PostOwnerName: {
+        type: String,
+        default: ""
+    },
+    PostOwnerImage: {
+        type: String,
+        default: ""
+    },
+    PostOwnerId: {
+        type: String,
+        default: ""
+    },
+    PostImage: {
+        type: String,
+        default: ""
+    },
+    Likes: {
+        type: Array,
+        default: []
+    },
+    Comments: {
+        type: [Comments],
+        default: []
     }
-})
+},
+    { timestamps: true }
 
-module.exports = mongoose.model("addPost", AddPostSchema)
+)
+
+module.exports = mongoose.model("Posts", AddPostSchema)

@@ -1,16 +1,24 @@
 const Account = require('../Schema/Account')
+const Post = require('../Schema/Post')
 const bcrypt = require("bcrypt")
 
 
 exports.EditUserAccount = async (req, res) => {
 
-    console.log(req.params)
+    const body = req.body
 
-    if (req.body.User._id === req.params.id || req.body.User.IsAdmin) {
+    if (body.User._id === req.params.id || body.User.IsAdmin) {
         try {
             const user = await Account.findByIdAndUpdate(req.params.id, {
                 $set: req.body.User
             });
+            const UserPosts = await Post.updateMany({ PostOwnerId: body.User._id }, {
+                $set: {
+                    PostOwnerName: `${body.User.UserName} ${body.User.FamilyName}`,
+                    PostOwnerImage: body.User.ProfilePicture
+                }
+            })
+
             res.status(200).json("Account has been updated");
         } catch (e) {
             console.log(e)
